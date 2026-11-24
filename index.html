@@ -474,15 +474,46 @@
       }
     }
 
+    // Dummy accounts
+    const DUMMY_ACCOUNTS = [
+      { name: 'Yanti Hasibuan', email: 'yanti@gmail.com', password: 'yanti123' },
+      { name: 'Admin',          email: 'admin@freelancer.com', password: 'admin123' },
+      { name: 'Demo User',      email: 'demo@demo.com', password: 'demo1234' }
+    ];
+
+    function showError(message) {
+      let errorEl = document.getElementById('loginError');
+      if (!errorEl) {
+        errorEl = document.createElement('p');
+        errorEl.id = 'loginError';
+        errorEl.style.cssText = 'color:#e53e3e;font-size:13px;margin-top:-8px;margin-bottom:4px;text-align:center;';
+        const submitBtn = document.querySelector('.btn-submit');
+        submitBtn.parentNode.insertBefore(errorEl, submitBtn);
+      }
+      errorEl.textContent = message;
+    }
+
+    function clearError() {
+      const errorEl = document.getElementById('loginError');
+      if (errorEl) errorEl.textContent = '';
+    }
+
     function handleLogin(event) {
       event.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
+      clearError();
+      const email    = document.getElementById('email').value.trim().toLowerCase();
       const password = document.getElementById('password').value;
 
-      console.log('Login submitted:', { name, email, password });
-      // Redirect to dashboard page
-      window.location.href = 'dashboard.html';
+      const matched = DUMMY_ACCOUNTS.find(
+        acc => acc.email.toLowerCase() === email && acc.password === password
+      );
+
+      if (matched) {
+        console.log('Login success:', matched.name);
+        window.location.href = 'dashboard.html';
+      } else {
+        showError('Email atau password salah. Coba lagi.');
+      }
     }
 
     function handleSocialLogin(provider) {
