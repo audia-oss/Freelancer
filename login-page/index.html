@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Freelancer Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ebf2f8;
+      background-image: url('assets/background.png');
+      background-size: cover;
+      background-position: center left;
+      background-repeat: no-repeat;
+      position: relative;
+      color: #17374e;
+      overflow-x: hidden;
+    }
+
+    /* Subtle backdrop overlay for readability across various screen ratios */
+    .page-container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 60px 80px 0 80px;
+      max-width: 1440px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Left Hero Content */
+    .hero-content {
+      max-width: 620px;
+      padding-bottom: 220px;
+      user-select: none;
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 5.5vw, 80px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #000000;
+      margin-bottom: 32px;
+      letter-spacing: -1px;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(18px, 1.7vw, 24px);
+      font-weight: 400;
+      line-height: 1.45;
+      color: #222222;
+      max-width: 520px;
+    }
+
+    /* Right Login Card */
+    .login-card-wrapper {
+      width: 100%;
+      max-width: 570px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-card {
+      background: #ffffff;
+      border: 4px solid #3a89c4;
+      border-bottom: none;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      padding: 56px 44px 50px 44px;
+      box-shadow: 0 -10px 40px rgba(58, 137, 196, 0.12);
+      position: relative;
+    }
+
+    /* Header */
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .card-title {
+      font-size: clamp(32px, 3.5vw, 46px);
+      font-weight: 500;
+      color: #000000;
+      letter-spacing: -0.5px;
+    }
+
+    .cursor-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+    }
+
+    .cursor-icon:hover {
+      transform: translate(2px, -2px) scale(1.08);
+    }
+
+    /* Form */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 14.5px;
+      font-weight: 500;
+      color: #3a3740;
+      letter-spacing: 0.8px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #ebf2f8;
+      border: 1.25px solid #c4dbed;
+      border-radius: 9px;
+      transition: all 0.2s ease;
+    }
+
+    .input-wrapper:focus-within {
+      border-color: #3a89c4;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(58, 137, 196, 0.15);
+    }
+
+    .form-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 13px 16px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #1e293b;
+      outline: none;
+    }
+
+    .form-input::placeholder {
+      color: #a79eb7;
+      font-size: 16px;
+    }
+
+    .toggle-password {
+      background: none;
+      border: none;
+      padding: 0 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #718096;
+      transition: opacity 0.2s;
+    }
+
+    .toggle-password:hover {
+      opacity: 0.8;
+    }
+
+    .toggle-password img {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Forgot Password */
+    .forgot-password-row {
+      text-align: center;
+      margin-top: -6px;
+      margin-bottom: 2px;
+    }
+
+    .forgot-password-link {
+      color: #38353d;
+      font-size: 16px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .forgot-password-link:hover {
+      color: #3a89c4;
+      text-decoration: underline;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      background-color: #3a89c4;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      height: 44px;
+      font-size: 16px;
+      font-weight: 500;
+      letter-spacing: 0.15px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-submit:hover {
+      background-color: #3278ad;
+      box-shadow: 0 4px 12px rgba(58, 137, 196, 0.3);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.99);
+    }
+
+    /* Divider */
+    .divider-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 4px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background-color: #38353d;
+      opacity: 0.85;
+    }
+
+    .divider-text {
+      color: #38353d;
+      font-size: 16px;
+      font-weight: 500;
+      user-select: none;
+    }
+
+    /* Social Login Buttons */
+    .social-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 46px;
+      border: 2px solid #3479b0;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #17374e;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-social:hover {
+      background-color: #f3f8fd;
+      border-color: #235175;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(52, 121, 176, 0.15);
+    }
+
+    .btn-social.facebook {
+      color: #235175;
+    }
+
+    .btn-social img {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1080px) {
+      body {
+        background-position: center top;
+        align-items: flex-start;
+      }
+
+      .page-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 24px 0 24px;
+      }
+
+      .hero-content {
+        max-width: 100%;
+        text-align: center;
+        padding-bottom: 40px;
+      }
+
+      .hero-subtitle {
+        margin: 0 auto;
+      }
+
+      .login-card-wrapper {
+        max-width: 520px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .login-card {
+        padding: 40px 24px 40px 24px;
+        border-top-left-radius: 28px;
+        border-top-right-radius: 28px;
+        border-width: 3px;
+      }
+
+      .card-header {
+        margin-bottom: 28px;
+      }
+
+      .social-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page-container">
+    <!-- Left Hero Section -->
+    <section class="hero-content" aria-label="Hero Introduction">
+      <h1 class="hero-title">
+        <span>Hello</span>
+        <span>Freelancer design</span>
+      </h1>
+      <p class="hero-subtitle">
+        Find creative projects that match your skills, work with amazing clients, and grow your freelance career.
+      </p>
+    </section>
+
+    <!-- Right Login Card -->
+    <div class="login-card-wrapper">
+      <section class="login-card" aria-label="Login Form">
+        <header class="card-header">
+          <h2 class="card-title">Welcome back</h2>
+          <img class="cursor-icon" src="assets/mouse-pointer.svg" alt="pointer icon">
+        </header>
+
+        <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+          <!-- Name Field -->
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-input" 
+                placeholder="Yanti..." 
+                required
+                autocomplete="name"
+              >
+            </div>
+          </div>
+
+          <!-- Email Field -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <div class="input-wrapper">
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                class="form-input" 
+                placeholder="Yantihasibuan@gmai.com" 
+                required
+                autocomplete="email"
+              >
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-wrapper">
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                class="form-input" 
+                placeholder="Hasibuan cantik" 
+                required
+                autocomplete="current-password"
+              >
+              <button 
+                type="button" 
+                class="toggle-password" 
+                id="togglePassword" 
+                aria-label="Toggle password visibility"
+                onclick="togglePasswordVisibility()"
+              >
+                <img src="assets/eye-closed.svg" alt="Show/hide password icon" id="eyeIcon">
+              </button>
+            </div>
+          </div>
+
+          <!-- Forgot Password -->
+          <div class="forgot-password-row">
+            <a href="#forgot-password" class="forgot-password-link">Forgot password</a>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit">
+            Login
+          </button>
+
+          <!-- Divider -->
+          <div class="divider-row">
+            <div class="divider-line"></div>
+            <span class="divider-text">OR</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <!-- Social Buttons -->
+          <div class="social-row">
+            <button type="button" class="btn-social google" onclick="handleSocialLogin('Google')">
+              <img src="assets/google.svg" alt="Google logo">
+              <span>Google</span>
+            </button>
+            <button type="button" class="btn-social facebook" onclick="handleSocialLogin('Facebook')">
+              <img src="assets/facebook.svg" alt="Facebook logo">
+              <span>Facebook</span>
+            </button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function togglePasswordVisibility() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.style.opacity = '0.5';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.style.opacity = '1';
+      }
+    }
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      console.log('Login submitted:', { name, email, password });
+      // Redirect to dashboard page
+      window.location.href = 'dashboard.html';
+    }
+
+    function handleSocialLogin(provider) {
+      console.log(`Social login initiated with ${provider}`);
+      alert(`Sign in with ${provider} clicked`);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audia Silmi Avani Hasibuan - Profile View for HRD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Roboto', 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 80px;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      width: 100%;
+      max-width: 1380px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .nav-back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #3479b0;
+      font-size: 14.5px;
+      font-weight: 500;
+      transition: color 0.15s ease;
+    }
+
+    .nav-back-link:hover {
+      color: #235175;
+      text-decoration: underline;
+    }
+
+    .hrd-badge {
+      background-color: #ebf2f8;
+      color: #235175;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 9999px;
+    }
+
+    /* Main Container */
+    .profile-container {
+      width: 100%;
+      max-width: 1380px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* =========================================================
+       1. HERO & BANNER SECTION
+       ========================================================= */
+    .hero-banner-wrapper {
+      width: 100%;
+      height: 340px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      background-color: #e0f2fe;
+    }
+
+    .hero-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Header Profile Info (Avatar + Bio) */
+    .profile-header {
+      display: flex;
+      gap: 50px;
+      margin-top: -110px;
+      position: relative;
+      z-index: 2;
+      align-items: flex-start;
+      padding: 0 10px;
+    }
+
+    /* Avatar Column */
+    .avatar-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 224px;
+      min-width: 224px;
+    }
+
+    .avatar-img {
+      width: 224px;
+      height: 224px;
+      border-radius: 50%;
+      border: 6px solid #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      object-fit: cover;
+      background-color: #ffffff;
+    }
+
+    .location-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #000000;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .location-row img {
+      width: 17px;
+      height: 17px;
+    }
+
+    .reviews-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stars-group {
+      display: flex;
+      gap: 2px;
+    }
+
+    .stars-group img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .reviews-text {
+      font-size: 13px;
+      color: #000000;
+      white-space: nowrap;
+    }
+
+    /* Details Column */
+    .profile-details-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 120px;
+    }
+
+    .candidate-name {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 700;
+      color: #000000;
+      line-height: 1.15;
+    }
+
+    .candidate-role {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(20px, 2vw, 24px);
+      font-weight: 500;
+      color: #3479b0;
+      margin-bottom: 4px;
+    }
+
+    .candidate-bio {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 13px;
+      color: #222222;
+      line-height: 1.6;
+    }
+
+    .candidate-bio p {
+      margin-bottom: 4px;
+    }
+
+    .candidate-bio .bio-highlight {
+      font-weight: 600;
+      color: #000000;
+    }
+
+    /* =========================================================
+       2. THREE COLUMN DETAILS GRID
+       ========================================================= */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 290px 360px 1fr;
+      gap: 28px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    /* Card Box Styles */
+    .info-card {
+      background-color: #ebf2f8;
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .info-card:hover {
+      box-shadow: 0 6px 18px rgba(52, 121, 176, 0.08);
+    }
+
+    /* Left Column */
+    .col-left {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header-row img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .card-header-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #3479b0;
+    }
+
+    .card-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #000000;
+    }
+
+    .availability-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .availability-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12.5px;
+      color: #000000;
+    }
+
+    .availability-item img {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    /* Center Column */
+    .col-center {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contact-card-title {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #3479b0;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      color: #000000;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .contact-item:hover {
+      color: #3479b0;
+    }
+
+    .contact-item img {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+    }
+
+    /* Tools Grid */
+    .tools-card-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #3479b0;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 24px;
+    }
+
+    .tool-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tool-icon-wrapper {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tool-icon-wrapper img {
+      max-width: 38px;
+      max-height: 38px;
+      object-fit: contain;
+    }
+
+    .tool-name {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #000000;
+    }
+
+    /* Right Column: Resent Work */
+    .col-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .work-card {
+      background-color: #ebf2f8;
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+    }
+
+    .work-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .work-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #3479b0;
+    }
+
+    .see-more-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #3479b0;
+      text-decoration: none;
+      transition: gap 0.15s ease;
+    }
+
+    .see-more-link:hover {
+      gap: 12px;
+      color: #235175;
+    }
+
+    .see-more-link img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .work-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .work-item {
+      height: 240px;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      background-color: #ffffff;
+    }
+
+    .work-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(52, 121, 176, 0.16);
+    }
+
+    .work-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .profile-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .col-right {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: -80px;
+      }
+      .profile-details-column {
+        padding-top: 0;
+        align-items: center;
+      }
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+      .col-right {
+        grid-column: span 1;
+      }
+      .work-gallery {
+        grid-template-columns: 1fr;
+      }
+      .work-item {
+        height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <a href="dashboard.html" class="nav-back-link">
+      <span>&larr; Back to Dashboard</span>
+    </a>
+    <span class="hrd-badge">HRD Review View</span>
+  </header>
+
+  <main class="profile-container">
+
+    <!-- Hero Banner -->
+    <section class="hero-banner-wrapper" aria-label="Profile Banner">
+      <img src="assets/profile/banner.png" alt="Profile illustration banner" class="hero-banner-img">
+    </section>
+
+    <!-- Header: Avatar + Candidate Identity & Bio -->
+    <header class="profile-header">
+      
+      <!-- Avatar Column -->
+      <div class="avatar-column">
+        <img src="assets/profile/avatar.png" alt="Audia Silmi Avani Hasibuan" class="avatar-img">
+        
+        <div class="location-row">
+          <img src="assets/profile/location.svg" alt="Location pin">
+          <span>Indonesia, Medan</span>
+        </div>
+
+        <div class="reviews-row" title="Rating 4.2 out of 5 based on 20 reviews">
+          <div class="stars-group">
+            <img src="assets/profile/star-filled.svg" alt="Star">
+            <img src="assets/profile/star-filled.svg" alt="Star">
+            <img src="assets/profile/star-filled.svg" alt="Star">
+            <img src="assets/profile/star-filled.svg" alt="Star">
+            <img src="assets/profile/star-empty.svg" alt="Star">
+          </div>
+          <span class="reviews-text">4,2 (20 review)</span>
+        </div>
+      </div>
+
+      <!-- Details Column -->
+      <div class="profile-details-column">
+        <h1 class="candidate-name">Audia Silmi Avani Hasibuan</h1>
+        <h2 class="candidate-role">Graphic Designer & Visual Designer</h2>
+
+        <div class="candidate-bio">
+          <p>I create creative and engaging visual designs for brands, businesses, and personal projects.</p>
+          <p class="bio-highlight">Specialized in:</p>
+          <p>Branding • Poster • Social Media • Illustration • UI/UX</p>
+          <p class="bio-highlight">Tools:</p>
+          <p>Figma • Adobe Photoshop • Adobe Illustrator</p>
+          <p>Available for freelance projects and creative collaborations.</p>
+        </div>
+      </div>
+
+    </header>
+
+    <!-- 3-Column Profile Information Grid -->
+    <section class="profile-grid">
+
+      <!-- Column 1: About Me & Availability -->
+      <div class="col-left">
+        
+        <!-- About Me Card -->
+        <article class="info-card">
+          <div class="card-header-row">
+            <img src="assets/dashboard/user.svg" alt="User">
+            <h3 class="card-header-title">About me</h3>
+          </div>
+          <p class="card-text">
+            I am a graphic designer passionate about creating creative, professional, and meaningful visual designs. I believe that good design is not merely about an attractive appearance, but also about how visual elements can convey a message and strengthen brand identity.
+          </p>
+        </article>
+
+        <!-- Availability Card -->
+        <article class="info-card">
+          <div class="card-header-row">
+            <img src="assets/profile/work.svg" alt="Briefcase">
+            <h3 class="card-header-title" style="color: #235175;">availability</h3>
+          </div>
+          <ul class="availability-list">
+            <li class="availability-item">
+              <img src="assets/profile/clock.svg" alt="Clock">
+              <span>Full Time / part Time</span>
+            </li>
+            <li class="availability-item">
+              <img src="assets/profile/globe.svg" alt="Globe">
+              <span>Indonesia and other countries</span>
+            </li>
+            <li class="availability-item">
+              <img src="assets/profile/link.svg" alt="Link">
+              <span>Remote / on site</span>
+            </li>
+          </ul>
+        </article>
+
+      </div>
+
+      <!-- Column 2: Contact Information & Tools -->
+      <div class="col-center">
+        
+        <!-- Contact Information Card -->
+        <article class="info-card">
+          <h3 class="contact-card-title">Contact information</h3>
+          <div class="contact-list">
+            <a href="mailto:audiasilmavanihasibuan@gmail.com" class="contact-item">
+              <img src="assets/profile/mail.svg" alt="Email">
+              <span>audiasilmavanihasibuan@gmail.com</span>
+            </a>
+            <a href="tel:+26846296348" class="contact-item">
+              <img src="assets/profile/phone.svg" alt="Phone">
+              <span>+268-4629-6348</span>
+            </a>
+            <a href="https://www.linkedin.com/in/audia-silmi-avani-hasibuan" target="_blank" rel="noopener noreferrer" class="contact-item">
+              <img src="assets/profile/linkedin.svg" alt="LinkedIn">
+              <span>linkedin.com/in/audia-silmi-avani-hasibuan</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Tools Card -->
+        <article class="info-card">
+          <h3 class="tools-card-title">Tools</h3>
+          <div class="tools-grid">
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-figma.png" alt="Figma">
+              </div>
+              <span class="tool-name">Figma</span>
+            </div>
+
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-ai.png" alt="Adobe Illustrator">
+              </div>
+              <span class="tool-name">Adobe illustrator</span>
+            </div>
+
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-pr.png" alt="Premiere Pro">
+              </div>
+              <span class="tool-name">Premiere pro</span>
+            </div>
+
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-ps.png" alt="Photoshop">
+              </div>
+              <span class="tool-name">Photoshop</span>
+            </div>
+
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-ae.png" alt="After Effects">
+              </div>
+              <span class="tool-name">adobe effects</span>
+            </div>
+
+            <div class="tool-badge">
+              <div class="tool-icon-wrapper">
+                <img src="assets/profile/tool-canva.png" alt="Canva">
+              </div>
+              <span class="tool-name">Canva</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Column 3: Resent Work Gallery -->
+      <div class="col-right">
+        
+        <article class="work-card">
+          <div class="work-header">
+            <h3 class="work-title">Resent work</h3>
+            <a href="#see-more" class="see-more-link">
+              <span>See more</span>
+              <img src="assets/profile/arrow-forward.svg" alt="arrow">
+            </a>
+          </div>
+
+          <div class="work-gallery">
+            <div class="work-item" title="App UI/UX Design Project">
+              <img src="assets/profile/work1.png" alt="Mobile App UI design showcase">
+            </div>
+            <div class="work-item" title="Landing Page Tablet Design">
+              <img src="assets/profile/work2.png" alt="Tablet SaaS landing page showcase">
+            </div>
+            <div class="work-item" title="Dark SEO Strategy Web Mockup">
+              <img src="assets/profile/work3.png" alt="Laptop SEO strategy mockup showcase">
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
