@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Not Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Container for the 404 scene */
+    .error-container {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Floating question mark icons matching Figma layout */
+    .icon-help {
+      position: absolute;
+      width: 131px;
+      height: 131px;
+      user-select: none;
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
+
+    .icon-help img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 1. Upper Left Question Mark */
+    .icon-top-left {
+      top: -20px;
+      left: 140px;
+      transform: rotate(-15.36deg);
+      animation: float-tl 6s ease-in-out infinite alternate;
+    }
+
+    /* 2. Lower Left Question Mark */
+    .icon-bottom-left {
+      top: 310px;
+      left: 120px;
+      transform: rotate(-23.93deg);
+      animation: float-bl 7s ease-in-out infinite alternate;
+    }
+
+    /* 3. Upper Right Question Mark */
+    .icon-top-right {
+      top: -10px;
+      right: 170px;
+      transform: rotate(22.38deg);
+      animation: float-tr 6.5s ease-in-out infinite alternate;
+    }
+
+    /* 4. Lower Right Question Mark */
+    .icon-bottom-right {
+      top: 380px;
+      right: 160px;
+      transform: rotate(22.38deg);
+      animation: float-br 7.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes float-tl {
+      0% { transform: rotate(-15.36deg) translateY(0px); }
+      100% { transform: rotate(-12deg) translateY(-8px); }
+    }
+    @keyframes float-bl {
+      0% { transform: rotate(-23.93deg) translateY(0px); }
+      100% { transform: rotate(-20deg) translateY(8px); }
+    }
+    @keyframes float-tr {
+      0% { transform: rotate(22.38deg) translateY(0px); }
+      100% { transform: rotate(25deg) translateY(-8px); }
+    }
+    @keyframes float-br {
+      0% { transform: rotate(22.38deg) translateY(0px); }
+      100% { transform: rotate(19deg) translateY(8px); }
+    }
+
+    /* Center Content */
+    .content-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .error-code {
+      font-size: 300px;
+      font-weight: 500;
+      line-height: 0.9;
+      letter-spacing: -0.25px;
+      color: #000000;
+      user-select: none;
+    }
+
+    .error-title {
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: #000000;
+      margin-top: 24px;
+      margin-bottom: 20px;
+      letter-spacing: 0;
+    }
+
+    .error-desc {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: #000000;
+      max-width: 720px;
+      margin-bottom: 32px;
+    }
+
+    .btn-homepage {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 350px;
+      height: 65px;
+      background-color: #12293b;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 400;
+      border-radius: 12px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 12px rgba(18, 41, 59, 0.15);
+    }
+
+    .btn-homepage:hover {
+      background-color: #1c3c54;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(18, 41, 59, 0.25);
+    }
+
+    .btn-homepage:active {
+      transform: translateY(0);
+      background-color: #0e1f2c;
+    }
+
+    /* Quick switch pill for testing all pages */
+    .nav-pill {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(35, 81, 117, 0.92);
+      backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      font-size: 13px;
+      color: #ffffff;
+      z-index: 9999;
+    }
+
+    .nav-pill a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 4px 10px;
+      border-radius: 12px;
+      transition: background 0.15s;
+    }
+
+    .nav-pill a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-pill a.active {
+      background: #3a89c4;
+      font-weight: 600;
+    }
+
+    /* Responsive scaling */
+    @media (max-width: 1024px) {
+      .error-code {
+        font-size: 220px;
+      }
+      .icon-top-left { left: 40px; top: 0px; width: 100px; height: 100px; }
+      .icon-bottom-left { left: 30px; top: 240px; width: 100px; height: 100px; }
+      .icon-top-right { right: 60px; top: 10px; width: 100px; height: 100px; }
+      .icon-bottom-right { right: 40px; top: 300px; width: 100px; height: 100px; }
+    }
+
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 140px;
+      }
+      .error-title {
+        font-size: 32px;
+        margin-top: 16px;
+      }
+      .error-desc {
+        font-size: 18px;
+        padding: 0 16px;
+      }
+      .btn-homepage {
+        width: 280px;
+        height: 54px;
+        font-size: 20px;
+      }
+      .icon-help {
+        display: none; /* Hide decorative floating icons on very small screens to avoid overflow */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="error-container" role="main">
+    <!-- Floating question mark SVGs matching Figma positions -->
+    <!-- 1. Top Left -->
+    <div class="icon-help icon-top-left" aria-hidden="true">
+      <img src="assets/error/help-1.svg" alt="" />
+    </div>
+
+    <!-- 2. Bottom Left -->
+    <div class="icon-help icon-bottom-left" aria-hidden="true">
+      <img src="assets/error/help-2.svg" alt="" />
+    </div>
+
+    <!-- 3. Top Right -->
+    <div class="icon-help icon-top-right" aria-hidden="true">
+      <img src="assets/error/help-3.svg" alt="" />
+    </div>
+
+    <!-- 4. Bottom Right -->
+    <div class="icon-help icon-bottom-right" aria-hidden="true">
+      <img src="assets/error/help-3.svg" alt="" />
+    </div>
+
+    <!-- Center Content -->
+    <div class="content-wrapper">
+      <h1 class="error-code">404</h1>
+      <h2 class="error-title">Oops! Page not found</h2>
+      <p class="error-desc">
+        The page could not be found. Please check your connection<br />
+        or visit a page where you might find what you are looking for.
+      </p>
+      <a href="dashboard.html" class="btn-homepage" id="backBtn">
+        Back to homepage
+      </a>
+    </div>
+  </main>
+
+  <!-- Page Navigation Switcher -->
+  <nav class="nav-pill" aria-label="Page preview navigation">
+    <span style="font-weight: 600; opacity: 0.85;">Pages:</span>
+    <a href="index.html">Login</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="profile.html">Profile</a>
+    <a href="settings.html">Settings</a>
+    <a href="error.html" class="active">404 Error</a>
+  </nav>
+
+  <script>
+    // Smooth navigation interaction
+    document.getElementById('backBtn').addEventListener('click', function(e) {
+      // Default to dashboard as homepage; if history exists, user can also choose
+    });
+  </script>
+</body>
+</html>
