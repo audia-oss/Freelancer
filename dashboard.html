@@ -1,1 +1,708 @@
-ini
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Applications - Freelancer Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', 'Inter', sans-serif;
+      background: #fff;
+      color: #17374e;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── LAYOUT ── */
+    .layout { display: flex; width: 100%; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 320px;
+      min-width: 320px;
+      background: #f3f7fd;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 45px 34px 50px 34px;
+    }
+
+    .sidebar-nav { display: flex; flex-direction: column; gap: 8px; }
+    .sidebar-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #000;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      transition: background 0.15s;
+    }
+    .nav-item:hover { background: #e0ecf6; }
+    .nav-item.active { color: #3a89c4; }
+    .nav-item img { width: 27px; height: 27px; flex-shrink: 0; }
+
+    /* Help Card */
+    .help-card {
+      background: #c4dbed;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-top: 24px;
+    }
+    .help-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 8px;
+    }
+    .help-card p {
+      font-family: 'Inter', sans-serif;
+      font-size: 13.5px;
+      font-weight: 400;
+      color: #000;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .btn-support {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #4e93ca;
+      border: 1.1px solid #04343d;
+      border-radius: 8px;
+      padding: 11px 18px;
+      width: 100%;
+      cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #f0eef3;
+      letter-spacing: 0.17px;
+    }
+    .btn-support img { width: 18px; height: 18px; }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 36px 40px 40px 40px;
+      gap: 36px;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: #ebf2f8;
+      border-radius: 24px;
+      padding: 11px 21px;
+      width: 608px;
+    }
+    .search-bar img { width: 27px; height: 27px; flex-shrink: 0; }
+    .search-bar span {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #858585;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .bell-btn { background: none; border: none; cursor: pointer; }
+    .bell-btn img { width: 36px; height: 36px; }
+    .user-info { display: flex; align-items: center; gap: 9px; }
+    .user-info img { width: 53px; height: 53px; border-radius: 50%; object-fit: cover; }
+    .user-info span {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: #000;
+      width: 85px;
+      line-height: 1.3;
+    }
+
+    /* ── CONTENT ROW ── */
+    .content-row {
+      display: flex;
+      gap: 37px;
+      align-items: flex-start;
+    }
+
+    /* ── LEFT COLUMN: applications list ── */
+    .col-left { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+
+    .page-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #17374e;
+      line-height: 1.1;
+    }
+    .page-subtitle {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      color: #707070;
+      margin-top: 9px;
+    }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+      margin-top: 10px;
+    }
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 38px;
+      padding: 9px 20px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      border: none;
+      transition: all 0.15s;
+    }
+    .tab.active { background: #438bf8; color: #fff; }
+    .tab.inactive { background: #fff; color: #438bf8; border: 1px solid #73c4ff; }
+    .tab-badge {
+      background: #77adff;
+      color: #fff;
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Application Cards */
+    .app-list { display: flex; flex-direction: column; gap: 25px; margin-top: 10px; }
+
+    .app-card {
+      background: #f3f7fd;
+      border-radius: 16px;
+      padding: 19px 23px 20px 17px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-card-left { display: flex; align-items: center; gap: 12px; }
+
+    .app-icon {
+      width: 59px;
+      height: 59px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-icon img { width: 29px; height: 27px; object-fit: contain; }
+
+    .app-info { display: flex; flex-direction: column; gap: 7px; width: 201px; }
+    .app-job-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #17374e;
+    }
+    .app-company {
+      font-family: 'Roboto', sans-serif;
+      font-size: 10px;
+      color: #17374e;
+      opacity: 0.76;
+    }
+    .app-date {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 8px;
+      color: #17374e;
+      opacity: 0.76;
+    }
+    .app-date img { width: 8px; height: 8px; }
+
+    .app-card-right { display: flex; align-items: center; gap: 24px; }
+
+    .status-badge {
+      height: 25px;
+      border-radius: 12px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 84px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      opacity: 0.76;
+    }
+    .status-badge .dot { width: 10px; height: 10px; flex-shrink: 0; }
+    .status-badge img { width: 10px; height: 10px; flex-shrink: 0; }
+
+    .status-rejected { background: #ffc4d0; color: #ae2a44; }
+    .status-applied   { background: #bff5ff; color: #04343d; }
+    .status-interview { background: #e7daff; color: #3b2d55; }
+
+    .arrow-btn { background: none; border: none; cursor: pointer; }
+    .arrow-btn img { width: 25px; height: 25px; }
+
+    /* ── RIGHT COLUMN ── */
+    .col-right { width: 319px; display: flex; flex-direction: column; gap: 39px; }
+
+    /* Stats Card */
+    .stats-card {
+      background: #f3f7fd;
+      border-radius: 12px;
+      padding: 17px 19px 21px 19px;
+    }
+    .stats-header { display: flex; align-items: center; gap: 13px; margin-bottom: 27px; }
+    .stats-icon {
+      background: #77adff;
+      width: 57px;
+      height: 57px;
+      border-radius: 28.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stats-icon img { width: 27px; height: 27px; }
+    .stats-label {
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 13px;
+    }
+    .stats-number {
+      font-family: 'Roboto', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      color: #000;
+    }
+    .stats-breakdown {
+      display: flex;
+      gap: 35px;
+      align-items: center;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 5px; align-items: center; }
+    .stat-label-row { display: flex; align-items: center; gap: 6px; }
+    .stat-label-row img { width: 10px; height: 10px; }
+    .stat-label-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      opacity: 0.76;
+    }
+    .stat-count {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      color: #000;
+      text-align: center;
+    }
+
+    /* Tips Card */
+    .tips-card {
+      background: #f3f7fd;
+      border-radius: 12px;
+      padding: 24px 23px 45px 30px;
+    }
+    .tips-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 41px;
+    }
+    .tips-header img { width: 30px; height: 30px; }
+    .tips-header span {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      color: #000;
+    }
+    .tips-list { display: flex; flex-direction: column; gap: 39px; }
+    .tip-item { display: flex; align-items: flex-start; gap: 16px; }
+    .tip-num {
+      background: #77adff;
+      color: #fff;
+      border-radius: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .tip-text {
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      color: #000;
+      line-height: 1.5;
+      width: 215px;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+
+    <!-- ════ SIDEBAR ════ -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <p class="sidebar-title">Settings</p>
+
+        <a href="profile.html" class="nav-item">
+          <img src="assets/dashboard/user.svg" alt="Profile">
+          Profile
+        </a>
+        <a href="#" class="nav-item">
+          <img src="assets/dashboard/checkbox.svg" alt="Security">
+          Account security
+        </a>
+        <a href="#" class="nav-item">
+          <img src="assets/dashboard/wallet.svg" alt="Payment">
+          Payment
+        </a>
+        <a href="#" class="nav-item">
+          <img src="assets/dashboard/notifications.svg" alt="Notification">
+          Notification
+        </a>
+        <a href="dashboard.html" class="nav-item active">
+          <img src="assets/dashboard/scantext.svg" alt="My Applications">
+          My applications
+        </a>
+        <a href="#" class="nav-item">
+          <img src="assets/dashboard/globe.svg" alt="Language">
+          Language
+        </a>
+        <a href="#" class="nav-item">
+          <img src="assets/dashboard/lock.svg" alt="Privacy">
+          Privacy
+        </a>
+        <a href="settings.html" class="nav-item">
+          <img src="assets/dashboard/settings.svg" alt="Settings">
+          Settings
+        </a>
+        <a href="index.html" class="nav-item">
+          <img src="assets/dashboard/logout.svg" alt="Logout">
+          Logout
+        </a>
+
+        <!-- Help Card -->
+        <div class="help-card">
+          <h3>Need Help?</h3>
+          <p>Our support team is ready to help you 24/7</p>
+          <button class="btn-support">
+            <img src="assets/dashboard/headset-mic.svg" alt="">
+            Contact support
+          </button>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- ════ MAIN ════ -->
+    <main class="main">
+
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="search-bar">
+          <img src="assets/dashboard/search.svg" alt="Search">
+          <span>Search your job</span>
+        </div>
+        <div class="topbar-right">
+          <button class="bell-btn" aria-label="Notifications">
+            <img src="assets/dashboard/bell-badge.svg" alt="bell">
+          </button>
+          <div class="user-info">
+            <img src="assets/dashboard/avatar.png" alt="User avatar">
+            <span>Audia silmi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Row -->
+      <div class="content-row">
+
+        <!-- Left: Applications -->
+        <div class="col-left">
+          <div>
+            <h1 class="page-title">My applications</h1>
+            <p class="page-subtitle">track the status of your job applications and see updates from clients here</p>
+          </div>
+
+          <!-- Filter Tabs -->
+          <div class="filter-tabs">
+            <button class="tab active" onclick="filterApps('all', this)">
+              All
+              <span class="tab-badge">9</span>
+            </button>
+            <button class="tab inactive" onclick="filterApps('applied', this)">
+              Applied
+              <span class="tab-badge">3</span>
+            </button>
+            <button class="tab inactive" onclick="filterApps('interview', this)">
+              Interview
+              <span class="tab-badge">4</span>
+            </button>
+            <button class="tab inactive" onclick="filterApps('rejected', this)">
+              Rejected
+              <span class="tab-badge">2</span>
+            </button>
+          </div>
+
+          <!-- Application List -->
+          <div class="app-list" id="appList">
+
+            <!-- Card 1: Rejected -->
+            <div class="app-card" data-status="rejected">
+              <div class="app-card-left">
+                <div class="app-icon" style="background:#f5fffb;">
+                  <img src="assets/dashboard/logo-brand.svg" alt="">
+                </div>
+                <div class="app-info">
+                  <span class="app-job-title">UIUX Designer (Mobile app)</span>
+                  <span class="app-company">Kerja kreatif</span>
+                  <div class="app-date">
+                    <img src="assets/dashboard/calendar.svg" alt="">
+                    Interview 9 sept 2026
+                  </div>
+                </div>
+              </div>
+              <div class="app-card-right">
+                <div class="status-badge status-rejected">
+                  <img src="assets/dashboard/dot-red.svg" alt="" class="dot">
+                  rejected
+                </div>
+                <button class="arrow-btn"><img src="assets/dashboard/arrow-forward.svg" alt="detail"></button>
+              </div>
+            </div>
+
+            <!-- Card 2: Applied -->
+            <div class="app-card" data-status="applied">
+              <div class="app-card-left">
+                <div class="app-icon" style="background:#ebf2f8; border-radius:12px; overflow:hidden;">
+                  <img src="assets/dashboard/logo-vector.svg" alt="" style="width:59px;height:59px;object-fit:cover;">
+                </div>
+                <div class="app-info">
+                  <span class="app-job-title">Illustration design (vector)</span>
+                  <span class="app-company">Logoni company</span>
+                  <div class="app-date">
+                    <img src="assets/dashboard/calendar.svg" alt="">
+                    Interview 20 sept 2026
+                  </div>
+                </div>
+              </div>
+              <div class="app-card-right">
+                <div class="status-badge status-applied">
+                  <img src="assets/dashboard/dot-blue.svg" alt="" class="dot">
+                  Applied
+                </div>
+                <button class="arrow-btn"><img src="assets/dashboard/arrow-forward.svg" alt="detail"></button>
+              </div>
+            </div>
+
+            <!-- Card 3: Interview -->
+            <div class="app-card" data-status="interview">
+              <div class="app-card-left">
+                <div class="app-icon" style="background:#ebf2f8; border-radius:12px; overflow:hidden;">
+                  <img src="assets/dashboard/logo-media.svg" alt="" style="width:59px;height:59px;object-fit:cover;">
+                </div>
+                <div class="app-info">
+                  <span class="app-job-title">Editor Social media</span>
+                  <span class="app-company">elisabert tiktokers</span>
+                  <div class="app-date">
+                    <img src="assets/dashboard/calendar.svg" alt="">
+                    Interview 1 Juny 2026
+                  </div>
+                </div>
+              </div>
+              <div class="app-card-right">
+                <div class="status-badge status-interview">
+                  <img src="assets/dashboard/dot-purple.svg" alt="" class="dot">
+                  Interview
+                </div>
+                <button class="arrow-btn"><img src="assets/dashboard/arrow-forward.svg" alt="detail"></button>
+              </div>
+            </div>
+
+            <!-- Card 4: Rejected -->
+            <div class="app-card" data-status="rejected">
+              <div class="app-card-left">
+                <div class="app-icon" style="background:#ffe5ab;">
+                  <img src="assets/dashboard/logo-poster.svg" alt="">
+                </div>
+                <div class="app-info">
+                  <span class="app-job-title">Brand Identity Designer</span>
+                  <span class="app-company">Ambassador viki</span>
+                  <div class="app-date">
+                    <img src="assets/dashboard/calendar.svg" alt="">
+                    Interview 2 sept 2026
+                  </div>
+                </div>
+              </div>
+              <div class="app-card-right">
+                <div class="status-badge status-rejected">
+                  <img src="assets/dashboard/dot-red.svg" alt="" class="dot">
+                  rejected
+                </div>
+                <button class="arrow-btn"><img src="assets/dashboard/arrow-forward.svg" alt="detail"></button>
+              </div>
+            </div>
+
+            <!-- Card 5: Applied -->
+            <div class="app-card" data-status="applied">
+              <div class="app-card-left">
+                <div class="app-icon" style="background:#ebf2f8; border-radius:12px; overflow:hidden;">
+                  <img src="assets/dashboard/logo-uiux.svg" alt="" style="width:59px;height:59px;object-fit:cover;">
+                </div>
+                <div class="app-info">
+                  <span class="app-job-title">Poster Design</span>
+                  <span class="app-company">Arta Visual</span>
+                  <div class="app-date">
+                    <img src="assets/dashboard/calendar.svg" alt="">
+                    Interview 10 July 2026
+                  </div>
+                </div>
+              </div>
+              <div class="app-card-right">
+                <div class="status-badge status-applied">
+                  <img src="assets/dashboard/dot-blue.svg" alt="" class="dot">
+                  Applied
+                </div>
+                <button class="arrow-btn"><img src="assets/dashboard/arrow-forward.svg" alt="detail"></button>
+              </div>
+            </div>
+
+          </div><!-- /app-list -->
+        </div><!-- /col-left -->
+
+        <!-- Right Column -->
+        <div class="col-right">
+
+          <!-- Stats Card -->
+          <div class="stats-card">
+            <div class="stats-header">
+              <div class="stats-icon">
+                <img src="assets/dashboard/send.svg" alt="">
+              </div>
+              <div>
+                <div class="stats-label">Total Applications</div>
+                <div class="stats-number">13</div>
+              </div>
+            </div>
+            <div class="stats-breakdown">
+              <div class="stat-item">
+                <div class="stat-label-row">
+                  <img src="assets/dashboard/dot-blue.svg" alt="">
+                  <span class="stat-label-text" style="color:#04343d;">Applied</span>
+                </div>
+                <div class="stat-count">6</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label-row">
+                  <img src="assets/dashboard/dot-purple.svg" alt="">
+                  <span class="stat-label-text" style="color:#3b2d55;">Interview</span>
+                </div>
+                <div class="stat-count">3</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label-row">
+                  <img src="assets/dashboard/dot-red.svg" alt="">
+                  <span class="stat-label-text" style="color:#ae2a44;">rejected</span>
+                </div>
+                <div class="stat-count">3</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tips Card -->
+          <div class="tips-card">
+            <div class="tips-header">
+              <img src="assets/dashboard/bulb.svg" alt="">
+              <span>Tips For You</span>
+            </div>
+            <div class="tips-list">
+              <div class="tip-item">
+                <div class="tip-num">1</div>
+                <p class="tip-text">Tailor your portfolio to match the job requirements.</p>
+              </div>
+              <div class="tip-item">
+                <div class="tip-num">2</div>
+                <p class="tip-text">Use a CV that is concise and easy to understand.</p>
+              </div>
+              <div class="tip-item">
+                <div class="tip-num">3</div>
+                <p class="tip-text">Write a personalized and relevant application message.</p>
+              </div>
+              <div class="tip-item">
+                <div class="tip-num">4</div>
+                <p class="tip-text">Don't forget to keep your skills and portfolio up to date.</p>
+              </div>
+              <div class="tip-item">
+                <div class="tip-num">5</div>
+                <p class="tip-text">Highlight your strengths and unique skills to stand out from other applicants.</p>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /col-right -->
+      </div><!-- /content-row -->
+    </main>
+  </div>
+
+  <script>
+    function filterApps(status, btn) {
+      // Update tab styles
+      document.querySelectorAll('.tab').forEach(t => {
+        t.classList.remove('active');
+        t.classList.add('inactive');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('inactive');
+
+      // Filter cards
+      document.querySelectorAll('.app-card').forEach(card => {
+        if (status === 'all' || card.dataset.status === status) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
