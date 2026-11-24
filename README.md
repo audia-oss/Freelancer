@@ -48,8 +48,7 @@ login-page/
     └── error/                 # 404 floating question mark SVGs
         ├── help-1.svg
         ├── help-2.svg
-        └── help-3.svg
-```
+        ├── help-3.svg
         ├── star-filled.svg    # Yellow star
         ├── star-empty.svg     # Gray star
         ├── mail.svg           # Email icon
